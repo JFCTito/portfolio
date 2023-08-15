@@ -8,6 +8,7 @@ const projects: any = [
     name: 'project 1',
     description: 'project 1 description',
     img: 'project image',
+    tech: 'html',
     category: 'front or back',
   },
 ];
@@ -51,6 +52,7 @@ describe('ProjectController', () => {
       name: 'project 2',
       description: 'project 2 description',
       img: 'project image',
+      tech: 'html',
       category: 'front',
     };
     expect(await controller.create(newProject)).toMatchObject({
