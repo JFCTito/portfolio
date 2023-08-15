@@ -2,14 +2,23 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProjectModule } from './project/project.module';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     ProjectModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://portfolio:portfolio1234@clustertito.6d2esmg.mongodb.net/portfolio',
-    ),
+    ConfigModule.forRoot(),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        const mongooseOptions: MongooseModuleOptions = {
+          uri: configService.get<string>('MONGODB_URI'),
+        };
+        return mongooseOptions;
+      },
+      inject: [ConfigService],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
