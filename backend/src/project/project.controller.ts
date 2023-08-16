@@ -18,7 +18,7 @@ export class ProjectController {
   constructor(private projectService: ProjectService) {}
   // Obtener todos los projects
   @Get()
-  findAll(@Res() res) {
+  findAll() {
     return this.projectService.findAll();
   }
   // obtener un project
@@ -28,12 +28,13 @@ export class ProjectController {
   }
   // Crear un project
   @Post()
-  async create(@Res() res, @Body() createProjectDTO: CreateProjectDTO) {
-    const project = await this.projectService.create(createProjectDTO);
-    return res.status(HttpStatus.OK).json({
-      message: 'Project created successfully',
-      project: project,
-    });
+  async create(/* @Res() res, */ @Body() createProjectDTO: CreateProjectDTO) {
+    // const project = await this.projectService.create(createProjectDTO);
+    // return res.status(HttpStatus.OK).json({
+    //   message: 'Project created successfully',
+    //   project: project,
+    // });
+    return await this.projectService.create(createProjectDTO);
   }
   // eliminar un projecto
   @Delete(':id')

@@ -1,15 +1,22 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProjectController } from './project.controller';
 import { ProjectService } from './project.service';
+import { CreateProjectDTO } from './dto/project.dto';
 
-const projects: any = [
+const projects: CreateProjectDTO[] = [
   {
-    id: 1,
     name: 'project 1',
     description: 'project 1 description',
     img: 'project image',
     tech: 'html',
     category: 'front or back',
+  },
+  {
+    name: 'project 2',
+    description: 'project 2',
+    img: 'project image',
+    tech: 'css',
+    category: 'back',
   },
 ];
 
@@ -24,6 +31,10 @@ describe('ProjectController', () => {
       };
       projects.push(newProject);
       return Promise.resolve(newProject);
+    }),
+    findOne: jest.fn().mockImplementation((name) => {
+      const foundProject = projects.find((project) => project.name === name);
+      return Promise.resolve(foundProject);
     }),
   };
 
@@ -57,6 +68,16 @@ describe('ProjectController', () => {
     };
     expect(await controller.create(newProject)).toMatchObject({
       id: expect.any(Number),
+    });
+  });
+
+  it('should return an specific project', async () => {
+    expect(await controller.findOne('project 1')).toMatchObject({
+      name: 'project 1',
+      description: 'project 1 description',
+      img: 'project image',
+      tech: 'html',
+      category: 'front or back',
     });
   });
 });
