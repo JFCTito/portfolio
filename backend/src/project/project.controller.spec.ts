@@ -13,7 +13,7 @@ const projects: CreateProjectDTO[] = [
   },
   {
     name: 'project 2',
-    description: 'project 2',
+    description: 'project 2 description',
     img: 'project image',
     tech: 'css',
     category: 'back',
@@ -35,6 +35,15 @@ describe('ProjectController', () => {
     findOne: jest.fn().mockImplementation((name) => {
       const foundProject = projects.find((project) => project.name === name);
       return Promise.resolve(foundProject);
+    }),
+    update: jest.fn().mockImplementation((name, updatedData) => {
+      const foundIndex: any = projects.find((project) => project.name === name);
+      const updatedProject = {
+        ...projects[foundIndex],
+        ...updatedData,
+      };
+      projects[foundIndex] = updatedProject;
+      return Promise.resolve(updatedProject);
     }),
   };
 
@@ -79,5 +88,18 @@ describe('ProjectController', () => {
       tech: 'html',
       category: 'front or back',
     });
+  });
+
+  it('should update a project and return the project updated', async () => {
+    const updatedProject = {
+      name: 'project 2 updated',
+      description: 'project 2 description updated',
+      img: 'project image updated',
+      tech: 'tech updated',
+      category: 'front',
+    };
+    expect(await controller.update('project 2', updatedProject)).toMatchObject(
+      updatedProject,
+    );
   });
 });

@@ -48,7 +48,7 @@ export class ProjectController {
   // actualizar un projecto
   @Put(':id')
   async update(
-    @Res() res,
+    /* @Res() res, */
     @Param('id') id: string,
     @Body() createProjectDTO: CreateProjectDTO,
   ) {
@@ -57,9 +57,10 @@ export class ProjectController {
       createProjectDTO,
     );
     if (!updatedProject) throw new NotFoundException('Project not found');
-    return res.status(HttpStatus.OK).json({
-      message: 'Project updated successfully',
-      updatedProject,
-    });
+    // return res.status(HttpStatus.OK).json({
+    //   message: 'Project updated successfully',
+    //   updatedProject,
+    // });
+    return updatedProject;
   }
 }
