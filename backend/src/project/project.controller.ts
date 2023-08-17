@@ -42,7 +42,6 @@ export class ProjectController {
     const deletedProject = this.projectService.delete(id);
     return res.status(HttpStatus.OK).json({
       message: 'Project deleted successfully',
-      deletedProject,
     });
   }
   // actualizar un projecto
