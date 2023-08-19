@@ -4,4 +4,6 @@ export class CreateProjectDTO {
   readonly img: string;
   readonly tech: string;
   readonly category: string;
+  readonly url: string;
+  readonly github: string;
 }

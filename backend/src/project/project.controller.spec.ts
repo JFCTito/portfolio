@@ -10,6 +10,8 @@ const projects: CreateProjectDTO[] = [
     img: 'project image',
     tech: 'html',
     category: 'front or back',
+    url: 'project url',
+    github: 'project github',
   },
   {
     name: 'project 2',
@@ -17,6 +19,8 @@ const projects: CreateProjectDTO[] = [
     img: 'project image',
     tech: 'css',
     category: 'back',
+    url: 'project url',
+    github: 'project github',
   },
 ];
 
@@ -74,6 +78,8 @@ describe('ProjectController', () => {
       img: 'project image',
       tech: 'html',
       category: 'front',
+      url: 'project url',
+      github: 'project github',
     };
     expect(await controller.create(newProject)).toMatchObject({
       id: expect.any(Number),
@@ -87,6 +93,8 @@ describe('ProjectController', () => {
       img: 'project image',
       tech: 'html',
       category: 'front or back',
+      url: 'project url',
+      github: 'project github',
     });
   });
 
@@ -97,6 +105,8 @@ describe('ProjectController', () => {
       img: 'project image updated',
       tech: 'tech updated',
       category: 'front',
+      url: 'project url',
+      github: 'project github',
     };
     expect(await controller.update('project 2', updatedProject)).toMatchObject(
       updatedProject,
